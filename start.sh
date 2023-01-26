@@ -21,8 +21,8 @@ sudo apt install -y openjdk-11-jdk
 # Install Vim
 sudo apt install -y vim
 
-# Install Node.js and npm
-curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+# Install Node.js LTS
+curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
 sudo apt install -y nodejs
 
 # Install Angular CLI
@@ -55,3 +55,20 @@ brew install gcc
 
 # Install Tmux
 sudo apt install -y tmux
+
+# Install Spring Tool Suite (STS)
+wget https://download.springsource.com/release/STS4/4.8.3.RELEASE/dist/e4.18/spring-tool-suite-4-4.8.3.RELEASE-e4.18.0-linux.gtk.x86_64.tar.gz
+tar -xzf spring-tool-suite-4-4.8.3.RELEASE-e4.18.0-linux.gtk.x86_64.tar.gz
+rm spring-tool-suite-
+
+# Install PostgreSQL
+sudo apt install -y postgresql postgresql-contrib
+
+# Install MySQL
+sudo apt install -y mysql-server
+
+# Install PostgreSQL
+sudo apt install -y postgresql postgresql-contrib
+
+# Install MySQL
+sudo apt install -y mysql-server
