@@ -25,22 +25,6 @@ sudo apt install -y vim
 curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
 sudo apt install -y nodejs
 
-# Install Angular CLI
-sudo npm install -g @angular/cli
-
-# Install Visual Studio Code
-curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
-sudo install -o root -g root -m 644 microsoft.gpg /etc/apt/trusted.gpg.d/
-sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
-sudo apt update
-sudo apt install -y code
-
-# Install Sublime Text
-wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add -
-echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list
-sudo apt update
-sudo apt install -y sublime-text
-
 # Install Python 3
 sudo apt install -y python3 python3-pip
 
@@ -56,19 +40,40 @@ brew install gcc
 # Install Tmux
 sudo apt install -y tmux
 
-# Install Spring Tool Suite (STS)
-wget https://download.springsource.com/release/STS4/4.8.3.RELEASE/dist/e4.18/spring-tool-suite-4-4.8.3.RELEASE-e4.18.0-linux.gtk.x86_64.tar.gz
-tar -xzf spring-tool-suite-4-4.8.3.RELEASE-e4.18.0-linux.gtk.x86_64.tar.gz
-rm spring-tool-suite-
-
 # Install PostgreSQL
 sudo apt install -y postgresql postgresql-contrib
 
 # Install MySQL
 sudo apt install -y mysql-server
 
-# Install PostgreSQL
-sudo apt install -y postgresql postgresql-contrib
+# Verifica se o Zsh já está instalado
+if ! command -v zsh &> /dev/null; then
+    echo "Zsh não está instalado. Instalando..."
+    sudo apt update
+    sudo apt install -y zsh
+fi
 
-# Install MySQL
-sudo apt install -y mysql-server
+# Verifica se o Oh My Zsh já está instalado
+if [ ! -d "$HOME/.oh-my-zsh" ]; then
+    echo "Oh My Zsh não está instalado. Instalando..."
+    sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+fi
+
+# Instalação do plugin zsh-autosuggestions
+if [ ! -d "$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions" ]; then
+    echo "Plugin zsh-autosuggestions não está instalado. Instalando..."
+    git clone https://github.com/zsh-users/zsh-autosuggestions.git $HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+fi
+
+# Configura Zsh como shell padrão
+if [ "$SHELL" != "$(which zsh)" ]; then
+    echo "Configurando Zsh como shell padrão..."
+    chsh -s "$(which zsh)"
+fi
+
+# Configuração do arquivo .zshrc
+echo "Configurando plugins e tema do Oh My Zsh..."
+sed -i 's/ZSH_THEME=.*/ZSH_THEME="agnoster"/' ~/.zshrc
+sed -i 's/plugins=.*/plugins=(git zsh-autosuggestions)/' ~/.zshrc
+
+echo "Instalação e configuração do Zsh e plugins concluídas"
